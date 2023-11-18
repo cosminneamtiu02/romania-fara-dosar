@@ -8,17 +8,6 @@ from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)  # Initialze flask constructor
 
-# Add your own details
-config = {
-    "apiKey": "AIzaSyBFneL-i7Vw7SN1Z5xb7awvyAPW_0NAABI",
-    "authDomain": "hacathon-405514.firebaseapp.com",
-    "projectId": "hacathon-405514",
-    "storageBucket": "hacathon-405514.appspot.com",
-    "messagingSenderId": "261356358269",
-    "appId": "1:261356358269:web:314828cf1c22a08b547f14",
-    "measurementId": "G-Y0DNHY70N6"
-}
-
 # initialize firebase
 cred = credentials.Certificate("firestore/hacathon-405514-firebase-adminsdk-8k34v-49ee4584ff.json")
 firebase_app = firebase_admin.initialize_app(cred)
