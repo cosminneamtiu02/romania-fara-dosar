@@ -1,3 +1,3 @@
 # romania-fara-dosar
 
-pip install requirements
+pip install requirements.txt
