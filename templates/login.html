@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pyrebase-Flask-Login</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'main.css') }}">
+</head>
+<body>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h2 class="active"> Autentificare </h2>
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="{{ url_for('static', filename = 'user.png') }}" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form action="http://127.0.0.1:5000/result" method="POST">
+      <input type="email" id="login" class="fadeIn second" name="email" placeholder="e-mail">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="parola">
+      <input type="submit" class="fadeIn fourth" value="Autentificare">
+    </form>
+<!--
+	Will add in future
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div>
+ -->
+  </div>
+</div>
+</body>
+</html>
