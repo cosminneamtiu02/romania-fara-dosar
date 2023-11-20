@@ -10,7 +10,17 @@
     <div class="logo">
       <img src="static\user.png" alt="Logo" height="15px">
     </div>
-    <button class="logout-button">Deconecteaza-te</button>
+
+ <!--   <button class="logout-button">Deconecteaza-te</button>  -->
+
+    <button class="logout-button" onclick="logout()">Deconecteaza-te</button>
+
+    <script>
+    function logout() {
+    window.location.href = "{{ url_for('login') }}";
+    }
+    </script>
+
   </header>
 
   <div class="main">
@@ -18,3 +28,4 @@
     </div>
 </body>
 </html>
+
