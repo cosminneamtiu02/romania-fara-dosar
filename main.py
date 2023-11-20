@@ -3,8 +3,11 @@ from __future__ import print_function
 import sys
 
 import firebase_admin
+from PIL import Image
 from firebase_admin import credentials, firestore
 from flask import Flask, redirect, render_template, request, url_for
+
+from ai_lib import id_img_to_text, image_path_to_np_array, request_json_from_id_text
 
 app = Flask(__name__)  # Initialze flask constructor
 
@@ -70,7 +73,11 @@ def result():
 
 
 if __name__ == "__main__":
-    app.secret_key = 'super secret key'
+
+    image_path = 'static/coco.jpeg'
+    print(request_json_from_id_text(id_img_to_text(image_path_to_np_array(image_path))))
+    """    app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.debug = True
     app.run()
+    """
