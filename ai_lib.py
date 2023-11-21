@@ -41,7 +41,8 @@ def request_json_from_id_text(input_text):
     }
     model = TextGenerationModel.from_pretrained("text-bison")
     response = model.predict(
-        """I will be giving you a text in tripple quotes, resembling the the ocr scan of a romanian id. 
+        """
+        I will be giving you a text in tripple quotes, resembling the the ocr scan of a romanian id. 
         I want you to extract the data from it in the following JSON format. 
         I included a little description for how the data may look like for each field:
     {
@@ -63,3 +64,6 @@ def request_json_from_id_text(input_text):
     )
 
     return response.text
+
+def photo_to_json():
+    return
