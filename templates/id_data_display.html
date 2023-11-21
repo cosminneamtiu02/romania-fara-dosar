@@ -10,15 +10,90 @@
       <img src="static\user.png" alt="Logo" height="40px">
     </div>
   </header>
+<div class="main">
+      <div class="table-container">
+<table>
 
-  <script>
-    function logout() {
-      window.location.href = "{{ url_for('login') }}";
-    }
-  </script>
+            <tr>
+                <td colspan="2" class="image-row">
+                    <img src="static/coco.jpeg" alt="Image Description">
+                </td>
+            </tr>
+            <tr>
+                <td class="description-cell">Fotografie buletin</td>
+                <td class="description-cell">
+                    <img src="static/logo-gov.png" alt="Image Description">
+                </td>
+            </tr>
+            <tr>
+                <td class="description-cell">CNP</td>
+                <td class="input-cell"><input type="text" id="cnp" value=""></td>
+            </tr>
+            <tr>
+                <td class="description-cell">Serie</td>
+                <td class="input-cell"><input type="text" id="series" value=""></td>
+            </tr>
 
-  <div class="main">
-    <p class="welcome-message">Bine ai venit!</p>
+            <tr>
+                <td class="description-cell">Număr</td>
+                <td class="input-cell"><input type="text" id="number" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Nume</td>
+                <td class="input-cell"><input type="text" id="name" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Prenume</td>
+                <td class="input-cell"><input type="text" id="surname" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Cetățenie</td>
+                <td class="input-cell"><input type="text" id="citizenship" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Loc naștere</td>
+                <td class="input-cell"><input type="text" id="birth_place" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Domiciliu</td>
+                <td class="input-cell"><input type="text" id="address" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Emisă de</td>
+                <td class="input-cell"><input type="text" id="authority" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Eliberat la data</td>
+                <td class="input-cell"><input type="text" id="availability" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Valid până la data</td>
+                <td class="input-cell"><input type="text" id="valid_until" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Sex</td>
+                <td class="input-cell"><input type="text" id="Sex" value=""></td>
+            </tr>
+
+
+            <!-- Other rows will follow similarly -->
+        </table>
+    </div>
+
+    <div class="bottom-buttons">
+        <button class="return_button" >Întoarcere la pagina principală</button>
+        <button class="submit_button" >Înregistrează și validează buletin</button>
+    </div>
+
   </div>
 </body>
 </html>
