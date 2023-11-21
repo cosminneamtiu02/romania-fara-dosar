@@ -9,17 +9,70 @@
     <div class="logo">
       <img src="static\user.png" alt="Logo" height="40px">
     </div>
-    <button class="logout-button" onclick="logout()">Deconecteaza-te</button>
+    <button class="button-77" onclick="logout()">Deconectează-te</button>
   </header>
+
+  <div class="main">
+
+  <div class="drop-zone" id="dropZone" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+  </div>
+
+  <input type="file" id="fileInput" accept="image/*" onchange="handleFiles(event)" />
+  <label for="fileInput" class="submit_button">Selectează un buletin</label>
+  <button class="submit_button">Scanează date</button>
+
+  </div>
 
   <script>
     function logout() {
       window.location.href = "{{ url_for('login') }}";
     }
+
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+
+    function dragEnter(event) {
+      event.preventDefault();
+      document.getElementById('dropZone').classList.add('hover');
+    }
+
+    function dragLeave(event) {
+      event.preventDefault();
+      document.getElementById('dropZone').classList.remove('hover');
+    }
+
+    function drop(event) {
+      event.preventDefault();
+      document.getElementById('dropZone').classList.remove('hover');
+
+      const files = event.dataTransfer.files;
+      handleImageFiles(files);
+    }
+
+    function handleFiles(event) {
+      const files = event.target.files;
+      handleImageFiles(files);
+    }
+
+    function handleImageFiles(files) {
+      const imageType = /^image\//;
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (imageType.test(file.type)) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const img = new Image();
+            img.src = e.target.result;
+            document.getElementById('dropZone').innerHTML = '';
+            document.getElementById('dropZone').appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
   </script>
 
-  <div class="main">
-    <p class="welcome-message">Bine ai venit!</p>
-  </div>
 </body>
 </html>
