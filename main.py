@@ -18,6 +18,7 @@ firebase_app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 # Initialze person as dictionary
 person = {"is_logged_in": False, "email": ""}
+id_data = {}
 
 
 # Login
@@ -68,9 +69,12 @@ def result():
         if person["is_logged_in"]:
             return redirect(url_for('welcome'))
         else:
-            print("Autentificare nereușită4!", file=sys.stderr)
             return redirect(url_for('login'))
 
+
+@app.route("/data_display", methods=["POST", "GET"])
+def data_display():
+    return render_template("id_data_display.html", id_data=id_data)
 
 if __name__ == "__main__":
     """

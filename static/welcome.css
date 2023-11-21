@@ -182,6 +182,7 @@ body {
 }
 
 .submit_button {
+  margin: 4px 40px;
   align-items: center;
   appearance: none;
   background-clip: padding-box;
@@ -281,3 +282,10 @@ body {
   cursor: default;
   opacity: .24;
 }
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Adjust as needed */
+  align-items: center;
+  margin-top: 20px;
+  }
