@@ -23,6 +23,7 @@
 
 
       <form action="/data_display" method="post">
+        <input type="hidden" name="image_data" id="imageData" />
         <button class="submit_button">Scanează date</button>
       </form>
     </div>
@@ -61,22 +62,20 @@
     }
 
     function handleImageFiles(files) {
-      const imageType = /^image\//;
-
-      for (let i = 0; i < files.length; i++) {
+    const imageType = /^image\//;
+    for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (imageType.test(file.type)) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const img = new Image();
-            img.src = e.target.result;
-            document.getElementById('dropZone').innerHTML = '';
-            document.getElementById('dropZone').appendChild(img);
-          };
-          reader.readAsDataURL(file);
-        }
-      }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    document.getElementById('dropZone').innerHTML = '';
+                    document.getElementById('dropZone').appendChild(img); // Store the data URL in the hidden input field
+              		document.getElementById('imageData').value = e.target.result; };
+          reader.readAsDataURL(file); }
     }
+}
   </script>
 
 </body>

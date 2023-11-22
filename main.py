@@ -2,12 +2,12 @@ from __future__ import print_function
 
 import sys
 
+import cv2
 import firebase_admin
-from PIL import Image
 from firebase_admin import credentials, firestore
 from flask import Flask, redirect, render_template, request, url_for
 
-from ai_lib import id_img_to_text, image_path_to_np_array, request_json_from_id_text
+from ai_lib import photo_to_json, crop_face_from_id
 
 app = Flask(__name__)  # Initialze flask constructor
 
@@ -74,14 +74,23 @@ def result():
 
 @app.route("/data_display", methods=["POST", "GET"])
 def data_display():
-    return render_template("id_data_display.html", id_data=id_data)
+    if request.method == "POST":
+        try:
+
+            image_data = request.form.get("image_data")
+
+            id_json_data = photo_to_json(image_data)
+
+            id_image = crop_face_from_id(image_data)
+            cv2.imwrite("face.png", id_image)
+            print(id_json_data, file=sys.stderr)
+            return render_template("id_data_display.html", id_data=id_data)
+
+        except:
+            return redirect(url_for('welcome'))
+
 
 if __name__ == "__main__":
-    """
-    image_path = 'static/coco.jpeg'
-    print(request_json_from_id_text(id_img_to_text(image_path_to_np_array(image_path))))
-    """
-
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.debug = True
