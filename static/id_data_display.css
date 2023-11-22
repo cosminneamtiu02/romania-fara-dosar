@@ -95,6 +95,7 @@ th {
 }
 
 .input-cell input[type="text"] {
+  text-align: center;
   border: none;
   background-color: transparent;
   border-bottom: 1px solid #ed5605;

@@ -1,13 +1,13 @@
 from __future__ import print_function
 
-import sys
+import json
 
 import cv2
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, redirect, render_template, request, url_for
 
-from ai_lib import photo_to_json, crop_face_from_id
+from ai_lib import photo_to_json, crop_face_from_id, data_url_to_cv2
 
 app = Flask(__name__)  # Initialze flask constructor
 
@@ -79,12 +79,32 @@ def data_display():
 
             image_data = request.form.get("image_data")
 
-            id_json_data = photo_to_json(image_data)
+            id_json_data = json.loads(photo_to_json(image_data))
+            id_json_data['email'] = ''
+            id_json_data['phone_number'] = ''
+            id_json_data['password'] = ''
 
             id_image = crop_face_from_id(image_data)
-            cv2.imwrite("face.png", id_image)
-            print(id_json_data, file=sys.stderr)
-            return render_template("id_data_display.html", id_data=id_data)
+            cv2.imwrite("static/face.png", id_image)
+            cv2.imwrite("static/id.png", data_url_to_cv2(image_data))
+
+            id_json_data['face_photo'] = 'face.png'
+            id_json_data['id_photo'] = 'id.png'
+
+            return render_template("id_data_display.html",
+                                   cnp=id_json_data["cnp"],
+                                   series=id_json_data["series"],
+                                   number=id_json_data["number"],
+                                   name=id_json_data["name"],
+                                   surname=id_json_data["surname"],
+                                   citizenship=id_json_data["citizenship"],
+                                   place_of_birth=id_json_data["place_of_birth"],
+                                   address=id_json_data["adress"],
+                                   authority=id_json_data["authority"],
+                                   date_issued=id_json_data["date issued"],
+                                   valid_until=id_json_data["valid_until"],
+                                   sex=id_json_data["sex"]
+                                   )
 
         except:
             return redirect(url_for('welcome'))
