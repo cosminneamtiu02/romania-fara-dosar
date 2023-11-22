@@ -1,6 +1,8 @@
 from __future__ import print_function
 
 import json
+import os
+import sys
 
 import cv2
 import firebase_admin
@@ -8,6 +10,7 @@ from firebase_admin import credentials, firestore
 from flask import Flask, redirect, render_template, request, url_for
 
 from ai_lib import photo_to_json, crop_face_from_id, data_url_to_cv2
+from firestore_utils import commit_image_to_firestore, commit_person_to_firestore
 
 app = Flask(__name__)  # Initialze flask constructor
 
@@ -85,11 +88,11 @@ def data_display():
             id_json_data['password'] = ''
 
             id_image = crop_face_from_id(image_data)
-            cv2.imwrite("static/face.png", id_image)
-            cv2.imwrite("static/id.png", data_url_to_cv2(image_data))
+            cv2.imwrite("static/" + id_json_data["cnp"] + "_face.png", id_image)
+            cv2.imwrite("static/" + id_json_data["cnp"] + "_id.png", data_url_to_cv2(image_data))
 
-            id_json_data['face_photo'] = 'face.png'
-            id_json_data['id_photo'] = 'id.png'
+            id_json_data['face_photo'] = "static/" + id_json_data["cnp"] + "_face.png"
+            id_json_data['id_photo'] = "static/" + id_json_data["cnp"] + "_id.png"
 
             return render_template("id_data_display.html",
                                    cnp=id_json_data["cnp"],
@@ -103,14 +106,48 @@ def data_display():
                                    authority=id_json_data["authority"],
                                    date_issued=id_json_data["date issued"],
                                    valid_until=id_json_data["valid_until"],
-                                   sex=id_json_data["sex"]
+                                   sex=id_json_data["sex"],
+                                   id_image=id_json_data['face_photo'],
+                                   id_photo=id_json_data['id_photo']
                                    )
 
         except:
             return redirect(url_for('welcome'))
 
+@app.route('/commit_data', methods=['POST', 'GET'])
+def commit_data():
+    if request.method == "POST":
+        person_dictionary = {'cnp': request.form.get('cnp'),
+                             'series': request.form.get('series'),
+                             'number': request.form.get('number'),
+                             'name': request.form.get('name'),
+                             'surname': request.form.get('surname'),
+                             'citizenship': request.form.get('citizenship'),
+                             'birth_place': request.form.get('birth_place'),
+                             'address': request.form.get('address'),
+                             'authority': request.form.get('authority'),
+                             'availability': request.form.get('availability'),
+                             'valid_until': request.form.get('valid_until'),
+                             'sex': request.form.get('sex'),
+                             'email': request.form.get('email'),
+                             'phone_nr': request.form.get('phone_nr')}
+
+        #print(person_dictionary, file=sys.stderr)
+
+        face_photo = "static/" + person_dictionary["cnp"] + "_face.png"
+        id_photo = "static/" + person_dictionary["cnp"] + "_id.png"
+    
+        commit_person_to_firestore(person_dictionary,
+                                   face_photo,
+                                   id_photo)
+    
+        os.remove(face_photo)
+        os.remove(id_photo)
+
+        return redirect(url_for('welcome'))
 
 if __name__ == "__main__":
+
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.debug = True
