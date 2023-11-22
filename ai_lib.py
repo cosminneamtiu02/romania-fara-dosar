@@ -1,9 +1,58 @@
+import cv2
 import easyocr
 import numpy as np
 from PIL import Image
+import base64
+import io
 
 import vertexai
 from vertexai.language_models import TextGenerationModel
+
+def data_url_to_cv2(data_url):
+    # Extract the base64 encoded image data from the data URL
+    image_data = data_url.split(',')[1]
+
+    # Decode the base64 encoded image data
+    decoded_image_data = base64.b64decode(image_data)
+
+    # Convert the decoded image data to a numpy array
+    nparr = np.frombuffer(decoded_image_data, np.uint8)
+
+    # Read the image using cv2.imread
+    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+    return image
+
+def crop_face_from_id(img):
+    id_img = data_url_to_cv2(img)
+    face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+    scale_percent = 60  # percent of original size
+    width = int(id_img.shape[1] * scale_percent / 100)
+    height = int(id_img.shape[0] * scale_percent / 100)
+    dim = (width, height)
+
+    # resize image
+    image = cv2.resize(id_img, dim, interpolation=cv2.INTER_AREA)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # face classifier
+    faces = face_classifier.detectMultiScale(gray, 1.3, 5)
+    # When no faces detected, face_classifier returns and empty tuple
+    if faces is ():
+        return None
+
+    else:
+
+        ct = 0
+        for (x, y, width, height) in faces:
+            if len(faces) == ct + 1:
+                y -= 25
+                height += 25
+                roi = image[y:y + height, x:x + width]
+                return roi
+
+            ct += 1
 
 
 def id_img_to_text(image):
@@ -65,5 +114,23 @@ def request_json_from_id_text(input_text):
 
     return response.text
 
-def photo_to_json():
-    return
+def data_url_to_np_array(data_url):
+    # Remove the data URL prefix
+    encoded_image = data_url.split(",")[1]
+
+    # Decode the base64-encoded image data
+    decoded_image = base64.b64decode(encoded_image)
+
+    # Open the image using PIL
+    image = Image.open(io.BytesIO(decoded_image))
+
+    # Convert the image to a NumPy array
+    np_array = np.array(image)
+
+    return np_array
+
+def photo_to_json(data_url):
+    return request_json_from_id_text(id_img_to_text(data_url_to_np_array(data_url)))
+
+
+

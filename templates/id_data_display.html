@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome</title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename = 'id_data_display.css')}}">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="static\user.png" alt="Logo" height="40px">
+    </div>
+  </header>
+  <div class="main">
+    <div class="table-container">
+      <form action="/commit_data" method="POST">
+<table>
+
+            <tr>
+                <td colspan="2" class="image-row">
+                    <img src="{{ id_photo }}" alt="Image Description">
+                </td>
+            </tr>
+            <tr>
+                <td class="description-cell">Fotografie buletin</td>
+                <td class="description-cell">
+                    <img src="{{ id_image }}" alt="Image Description">
+                </td>
+            </tr>
+            <tr>
+                <td class="description-cell">CNP</td>
+                <td class="input-cell"><input type="text" name="cnp" id="cnp" value="{{ cnp }}"></td>
+            </tr>
+            <tr>
+                <td class="description-cell">Serie</td>
+                <td class="input-cell"><input type="text" name="series" id="series" value="{{ series }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Număr</td>
+                <td class="input-cell"><input type="text" name="number" id="number" value="{{ number }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Nume</td>
+                <td class="input-cell"><input type="text" name="name" id="name" value="{{ name }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Prenume</td>
+                <td class="input-cell"><input type="text" name="surname" id="surname" value="{{ surname }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Cetățenie</td>
+                <td class="input-cell"><input type="text" name="citizenship" id="citizenship" value="{{ citizenship }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Loc naștere</td>
+                <td class="input-cell"><input type="text" name="birth_place" id="birth_place" value="{{ place_of_birth }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Domiciliu</td>
+                <td class="input-cell"><input type="text" name="address" id="address" value="{{ address }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Emisă de</td>
+                <td class="input-cell"><input type="text" name="authority" id="authority" value="{{ authority }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Eliberat la data</td>
+                <td class="input-cell"><input type="text" name="availability" id="availability" value="{{ date_issued }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Valid până la data</td>
+                <td class="input-cell"><input type="text" name="valid_until" id="valid_until" value="{{ valid_until }}"></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Sex</td>
+                <td class="input-cell"><input type="text" name="sex" id="sex" value="{{ sex }}"></td>
+            </tr>
+            <tr>
+                <td class="description-cell">E-mail</td>
+                <td class="input-cell"><input type="text" name="email" id="email" value=""></td>
+            </tr>
+
+            <tr>
+                <td class="description-cell">Nr. telefon</td>
+                <td class="input-cell"><input type="text" name="phone_nr" id="phone_nr" value=""></td>
+            </tr>
+
+            <!-- Other rows will follow similarly -->
+        </table>
+
+        <div class="bottom-buttons">
+
+          <form action="/welcome">
+             <button type="submit" class="return_button">Întoarce-te la pagina principală</button>
+          </form>
+
+          <button type="submit" class="submit_button">Înregistrează și validează buletin</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
