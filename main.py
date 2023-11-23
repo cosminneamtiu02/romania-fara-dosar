@@ -148,6 +148,7 @@ def commit_data():
 
 if __name__ == "__main__":
 
+    app.run(port=5001)
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.debug = True
