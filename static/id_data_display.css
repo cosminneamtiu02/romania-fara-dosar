@@ -10,7 +10,7 @@ body {
   left: 0; /* Align the header to the left of the screen */
   width: 100%;
   height: 150px;
-  background-color: #007bff;
+  background-color: #4273b8;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -28,10 +28,10 @@ body {
 
 .logout-button {
   background-color: white;
-  color: #007bff;
+  color: #4273b8;
   padding: 10px 20px;
   border-radius: 10px;
-  border: 1px solid #007bff; /* Added border style */
+  border: 1px solid #4273b8; /* Added border style */
   cursor: pointer;
   margin-right: 70px; /* Adjust margin or positioning as needed */
   font-size: 16px;
